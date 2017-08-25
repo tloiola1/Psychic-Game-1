@@ -5,40 +5,28 @@ var computerChoices = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l
 var wins = 0;
 var losses = 0;
 var guessesLeft = 9;
-var guessedLetters = [];
 var userGuess = null;
 var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
-console.log("Wins: " + wins + " Losses: " + losses + " GuessesLeft: " + guessesLeft + " guessedLetters " + guessedLetters );
-
 
 document.onkeyup = function(event) {
     // String.fromCharCode converts a number into a character from an array
     var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
-	document.getElementById("guesses-made").innerHTML +=  event.key;
+	document.getElementById("guesses-made").innerHTML = userGuess;
 
-    //indexOf locates values in an array
-    if (guessedLetters.indexOf(userGuess) < 0 && computerChoices.indexOf(userGuess) >= 0) {
-        guessedLetters[guessedLetters.length] = userGuess;
+    if (userGuess !== computerChoices) {
         guessesLeft--;
-        document.getElementById("guessedLetters").innerHTML += event.key;
+        losses ++;
+        document.getElementById("losses").innerHTML = losses;
+        document.getElementById("guesses-left").innerHTML = guessesLeft ;
     }
-    // == checks if a value is equal to another value
-    if (computerGuess == guessedLetters) {
+    if (userGuess == computerGuess) {
         wins++;
-        console.log("Wins: " + wins + " Losses: " + losses + " GuessesLeft: " + guessesLeft + " guessedLetters " + guessedLetters );
-        document.getElementById("losses").innerHTML += event.key
+        document.getElementById("wins").innerHTML = wins;
     }
 
     if (guessesLeft == 0) {
-        losses++;
         guessesLeft = 9;
-        guessedLetters = [];
         computerGuess = computerChoices[Math.floor(Math.random() * (computerChoices.length))];
-        console.log("Wins: " + wins + " Losses: " + losses + " GuessesLeft: " + guessesLeft + " guessedLetters " + guessedLetters);
-        document.getElementById("guesses-left").innerHTML += event.key
+
     }
 }
-
-
-
-
